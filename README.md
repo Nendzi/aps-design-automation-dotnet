@@ -1,8 +1,8 @@
-# learn.forge.designautomation
+# APS Design Automation
 
 ## Description
 
-This sample is (will be) part of the [Learn Forge](http://learnforge.autodesk.io) tutorials.
+This sample is (will be) part of the [APS](https://tutorials.autodesk.io/design-automation/) tutorials.
 
 It includes 5 modules:
 
