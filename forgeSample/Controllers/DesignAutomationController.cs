@@ -349,6 +349,39 @@ namespace forgeSample.Controllers
             }
         }
 
+
+        static void onUploadProgress(float progress, TimeSpan elapsed, List<UploadItemDesc> objects)
+        {
+            Console.WriteLine("progress: {0} elapsed: {1} objects: {2}", progress, elapsed, string.Join(", ", objects));
+        }
+        public static async Task<string> GetObjectId(string bucketKey, string objectKey, dynamic oauth, string fileSavePath)
+        {
+            try
+            {
+                ObjectsApi objectsApi = new ObjectsApi();
+                objectsApi.Configuration.AccessToken = oauth.access_token;
+                List<UploadItemDesc> uploadRes = await objectsApi.uploadResources(bucketKey,
+                    new List<UploadItemDesc> {
+                        new UploadItemDesc(objectKey, await System.IO.File.ReadAllBytesAsync(fileSavePath))
+                    },
+                    null,
+                    onUploadProgress,
+                    null);
+                Console.WriteLine("**** Upload object(s) response(s):");
+                DynamicDictionary objValues = uploadRes[0].completed;
+                objValues.Dictionary.TryGetValue("objectId", out var id);           
+                                
+                return id?.ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception when preparing input url:{ex.Message}");
+                throw;
+            }
+
+        }
+
+
         /// <summary>
         /// Start a new workitem
         /// </summary>
@@ -382,18 +415,16 @@ namespace forgeSample.Controllers
             }
             catch { }; // in case bucket already exists
                        // 2. upload inputFile
-            string inputFileNameOSS = string.Format("{0}_input_{1}", DateTime.Now.ToString("yyyyMMddhhmmss"), Path.GetFileName(input.inputFile.FileName)); // avoid overriding
-            string inputUrl = await PrepareInputUrl(bucketKey, inputFileNameOSS, oauth, fileSavePath);
-            if (System.IO.File.Exists(fileSavePath))
-            {
-                System.IO.File.Delete(fileSavePath);
-            }
+            string inputFileNameOSS = string.Format("{0}_input_{1}", DateTime.Now.ToString("yyyyMMddhhmmss"), Path.GetFileName(input.inputFile.FileName));// avoid overriding
+
 
             // prepare workitem arguments
             // 1. input file
             XrefTreeArgument inputFileArgument = new XrefTreeArgument()
             {
-                Url = inputUrl
+                Url = await GetObjectId(bucketKey, inputFileNameOSS, oauth, fileSavePath),
+                Headers = new Dictionary<string, string>(){
+                    { "Authorization", oauth.access_token} }
             };
 
             // 2. input json
@@ -409,9 +440,18 @@ namespace forgeSample.Controllers
             string outputUrl = await PrepareOutputUrl(bucketKey, outputFileNameOSS, oauth);
             XrefTreeArgument outputFileArgument = new XrefTreeArgument()
             {
-                Url = outputUrl,
+                Url = await GetObjectId(bucketKey, outputFileNameOSS, oauth, fileSavePath),
+                Headers = new Dictionary<string, string>()
+                {
+                    { "Authorization", oauth.access_token}
+                },
                 Verb = Verb.Put
             };
+
+            if (System.IO.File.Exists(fileSavePath))
+            {
+                System.IO.File.Delete(fileSavePath);
+            }
 
             // prepare & submit workitem
             string callbackUrl = string.Format("{0}/api/aps/callback/designautomation?id={1}&outputFileName={2}", OAuthController.GetAppSetting("APS_WEBHOOK_URL"), browerConnectionId, outputFileNameOSS);
@@ -419,12 +459,12 @@ namespace forgeSample.Controllers
             {
                 ActivityId = activityName,
                 Arguments = new Dictionary<string, IArgument>()
-        {
-            { "inputFile", inputFileArgument },
-            { "inputJson",  inputJsonArgument },
-            { "outputFile", outputFileArgument },
-            { "onComplete", new XrefTreeArgument { Verb = Verb.Post, Url = callbackUrl } }
-        }
+                {
+                    { "inputFile", inputFileArgument },
+                    { "inputJson",  inputJsonArgument },
+                    { "outputFile", outputFileArgument },
+                    { "onComplete", new XrefTreeArgument { Verb = Verb.Post, Url = callbackUrl } }
+                }
             };
             WorkItemStatus workItemStatus = await _designAutomation.CreateWorkItemAsync(workItemSpec);
 
@@ -446,7 +486,7 @@ namespace forgeSample.Controllers
 
                 using (var httpClient = new HttpClient())
                 {
-                    byte[] bs = await httpClient.GetByteArrayAsync(bodyJson["reportUrl"].Value<string>());
+                    byte[] bs = await httpClient.GetByteArrayAsync(bodyJson["reportUrl"]?.Value<string>());
                     string report = System.Text.Encoding.Default.GetString(bs);
                     await _hubContext.Clients.Client(id).SendAsync("onComplete", report);
                 }
@@ -455,19 +495,14 @@ namespace forgeSample.Controllers
                 dynamic oauth = await OAuthController.GetInternalAsync();
 
                 ObjectsApi objectsApi = new ObjectsApi();
-                objectsApi.Configuration.AccessToken = oauth.access_token;
+                objectsApi.Configuration.AccessToken = oauth.access_token;              
 
-                //finalize upload in the callback.
-                ApiResponse<dynamic> res = await objectsApi.completeS3UploadAsyncWithHttpInfo(NickName.ToLower() + "-designautomation", outputFileName, S3UploadPayload, new Dictionary<string, object> {
-        { "minutesExpiration", 2.0 },
-        { "useCdn", true }
-        });
-                HttpErrorHandler(res, $"Failed to complete S3 posting");
-
-                res = await objectsApi.getS3DownloadURLAsyncWithHttpInfo(NickName.ToLower() + "-designautomation", outputFileName, new Dictionary<string, object> {
-        { "minutesExpiration", 15.0 },
-        { "useCdn", true }
-        });
+                ApiResponse<dynamic> res = await objectsApi.getS3DownloadURLAsyncWithHttpInfo(
+                                            NickName.ToLower()+"-designautomation",
+                                            outputFileName, new Dictionary<string, object> {
+                                            { "minutesExpiration", 15.0 },
+                                            { "useCdn", true }
+                                            });
                 await _hubContext.Clients.Client(id).SendAsync("downloadResult", (string)(res.Data.url));
                 Console.WriteLine("Congrats!");
             }
