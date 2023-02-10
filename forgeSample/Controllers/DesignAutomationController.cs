@@ -84,7 +84,6 @@ namespace forgeSample.Controllers
         [Route("api/aps/designautomation/engines")]
         public async Task<List<string>> GetAvailableEngines()
         {
-            dynamic oauth = await OAuthController.GetInternalAsync();
             List<string> allEngines = new List<string>();
             // define Engines API
             string paginationToken = null;
