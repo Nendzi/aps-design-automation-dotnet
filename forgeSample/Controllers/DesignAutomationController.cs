@@ -344,7 +344,7 @@ namespace forgeSample.Controllers
             {
                 Url = await GetObjectId(bucketKey, inputFileNameOSS, oauth, fileSavePath),
                 Headers = new Dictionary<string, string>(){
-                    { "Authorization", oauth.access_token} }
+                    { "Authorization", "Bearer " + oauth.access_token} }
             };
 
             // 2. input json
@@ -362,7 +362,7 @@ namespace forgeSample.Controllers
                 Url = await GetObjectId(bucketKey, outputFileNameOSS, oauth, fileSavePath),
                 Headers = new Dictionary<string, string>()
                 {
-                    { "Authorization", oauth.access_token}
+                    { "Authorization", "Bearer " + oauth.access_token}
                 },
                 Verb = Verb.Put
             };
