@@ -317,7 +317,7 @@ namespace forgeSample.Controllers
             string widthParam = workItemData["width"].Value<string>();
             string heigthParam = workItemData["height"].Value<string>();
             string activityName = string.Format("{0}.{1}", NickName, workItemData["activityName"].Value<string>());
-            string browerConnectionId = workItemData["browerConnectionId"].Value<string>();
+            string browserConnectionId = workItemData["browerConnectionId"].Value<string>();
 
             // save the file on the server
             var fileSavePath = Path.Combine(_env.ContentRootPath, Path.GetFileName(input.inputFile.FileName));
@@ -374,7 +374,7 @@ namespace forgeSample.Controllers
             }
 
             // prepare & submit workitem
-            string callbackUrl = string.Format("{0}/api/aps/callback/designautomation?id={1}&outputFileName={2}", OAuthController.GetAppSetting("APS_WEBHOOK_URL"), browerConnectionId, outputFileNameOSS);
+            string callbackUrl = string.Format("{0}/api/aps/callback/designautomation?id={1}&outputFileName={2}", OAuthController.GetAppSetting("APS_WEBHOOK_URL"), browserConnectionId, outputFileNameOSS);
             WorkItem workItemSpec = new WorkItem()
             {
                 ActivityId = activityName,

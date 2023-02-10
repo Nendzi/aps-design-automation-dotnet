@@ -50,12 +50,13 @@ namespace UpdateIPTParam
       Dictionary<string, string> parameters = JsonConvert.DeserializeObject<Dictionary<string, string>>(System.IO.File.ReadAllText("params.json"));
       foreach (KeyValuePair<string, string> entry in parameters)
       {
+        var keyName = entry.Key.ToLower();
         try
         {
-          Parameter param = theParams[entry.Key.ToLower()];
+          Parameter param = theParams[keyName];
           param.Expression = entry.Value;
         }
-        catch (Exception e) { LogTrace("Cannot update {0}: {1}", entry.Key, e.Message); }
+        catch (Exception e) { LogTrace("Cannot update {0}: {1}", keyName, e.Message); }
       }
       doc.Update();
     }

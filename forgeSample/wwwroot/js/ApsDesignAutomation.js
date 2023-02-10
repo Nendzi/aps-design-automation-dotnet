@@ -103,7 +103,7 @@ function startWorkitem() {
             width: $('#width').val(),
             height: $('#height').val(),
             activityName: $('#activity').val(),
-            browerConnectionId: connectionId
+            browserConnectionId: connectionId
         }));
         writeLog('Uploading input file...');
         $.ajax({
