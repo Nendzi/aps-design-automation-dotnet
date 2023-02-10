@@ -317,7 +317,7 @@ namespace forgeSample.Controllers
             string widthParam = workItemData["width"].Value<string>();
             string heigthParam = workItemData["height"].Value<string>();
             string activityName = string.Format("{0}.{1}", NickName, workItemData["activityName"].Value<string>());
-            string browserConnectionId = workItemData["browerConnectionId"].Value<string>();
+            string browserConnectionId = workItemData["browserConnectionId"].Value<string>();
 
             // save the file on the server
             var fileSavePath = Path.Combine(_env.ContentRootPath, Path.GetFileName(input.inputFile.FileName));
