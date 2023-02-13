@@ -36,7 +36,7 @@ https://user-images.githubusercontent.com/6602398/204210930-b4c11bb9-6d95-4e5f-8
 
 Clone this project or download it. It's recommended to install [GitHub desktop](https://desktop.github.com/). To clone it via command line, use the following (**Terminal** on MacOSX/Linux, **Git Shell** on Windows):
 
-    git clone https://github.com/autodesk-forge/learn.forge.designautomation
+    git clone https://github.com/autodesk-platform-services/aps-design-automation-dotnet.git
 
 **ngrok**
 
