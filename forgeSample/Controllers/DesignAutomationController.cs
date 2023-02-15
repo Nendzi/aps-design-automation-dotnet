@@ -231,9 +231,9 @@ namespace forgeSample.Controllers
                     Engine = engineName,
                     Parameters = new Dictionary<string, Parameter>()
                     {
-                        { "inputFile", new Parameter() { Description = "input file", LocalName = "$(inputFile)", Ondemand = false, Required = true, Verb = Verb.Get, Zip = false } },
+                        { "inputFile", new Parameter() { Description = "input file", LocalName = "workFile." + engineAttributes.extension, Ondemand = false, Required = true, Verb = Verb.Get, Zip = false } },
                         { "inputJson", new Parameter() { Description = "input json", LocalName = "params.json", Ondemand = false, Required = false, Verb = Verb.Get, Zip = false } },
-                        { "outputFile", new Parameter() { Description = "output file", LocalName = "outputFile." + engineAttributes.extension, Ondemand = false, Required = true, Verb = Verb.Put, Zip = false } }
+                        { "outputFile", new Parameter() { Description = "output file", LocalName = "workFile." + engineAttributes.extension, Ondemand = false, Required = true, Verb = Verb.Put, Zip = false } }
                      },
                     Settings = new Dictionary<string, ISetting>()
                     {

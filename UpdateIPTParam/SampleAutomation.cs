@@ -21,19 +21,8 @@ namespace UpdateIPTParam
         // update parameters in the doc
         ChangeParameters(doc);
 
-        // generate outputs
-        var docDir = System.IO.Path.GetDirectoryName(doc.FullFileName);
-
-        // save output file
-        var documentType = doc.DocumentType;
-        if (documentType == DocumentTypeEnum.kPartDocumentObject)
-        {
-          // the name must be in sync with OutputIpt localName in Activity
-          var fileName = System.IO.Path.Combine(docDir, "outputFile.ipt");
-
-          // save file                                                                
-          doc.SaveAs(fileName, false);
-        }
+        // save file                                                                
+        doc.Save2();
       }
       catch (Exception e) { LogTrace("Processing failed: {0}", e.ToString()); }
     }
