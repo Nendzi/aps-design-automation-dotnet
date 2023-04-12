@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "forgesample", "forgesample\forgesample.csproj", "{AFBF1E9B-9949-4DFC-8D5E-9EF8D5347AC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "designAutomationSample", "designAutomationSample\designAutomationSample.csproj", "{AFBF1E9B-9949-4DFC-8D5E-9EF8D5347AC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateRVTParam", "updateRVTParam\UpdateRVTParam.csproj", "{9A402F71-D386-4E2D-9582-1E99CE87206D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateRVTParam", "UpdateRVTParam\UpdateRVTParam.csproj", "{9A402F71-D386-4E2D-9582-1E99CE87206D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateDWGParam", "updateDWGParam\UpdateDWGParam.csproj", "{F17BDCE4-8CD6-4DAF-B57A-3A4B8137D736}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateDWGParam", "UpdateDWGParam\UpdateDWGParam.csproj", "{F17BDCE4-8CD6-4DAF-B57A-3A4B8137D736}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateMAXParam", "UpdateMAXParam\UpdateMAXParam.csproj", "{FE45C541-D216-4792-983D-3100BA9F3F4F}"
 EndProject

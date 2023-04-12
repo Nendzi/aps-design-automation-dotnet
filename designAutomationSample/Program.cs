@@ -2,7 +2,7 @@ using Autodesk.Forge.Core;
 using Autodesk.Forge.DesignAutomation;
 using Microsoft.AspNetCore;
 
-namespace forgeSample
+namespace designAutomationSample
 {
     public class Program
     {

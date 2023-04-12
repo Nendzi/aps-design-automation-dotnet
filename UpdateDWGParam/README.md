@@ -1,4 +1,4 @@
-# learn.forge.designautomation - AutoCAD
+# learn.aps.designautomation - AutoCAD
 
 ![Platforms](https://img.shields.io/badge/Plugins-Windows-lightgray.svg)
 ![.NET](https://img.shields.io/badge/.NET%20Framework-4.7-blue.svg)
@@ -29,7 +29,9 @@ This AutoCAD plugin requires **AcCoreMgd** and **AcDbMgd** references, which sho
 Under **Properties**, at **Build Event** page, the following `Post-build event command line` will copy the DLL into the `\UpdateDWGParam.bundle/Content\` folder, create a `.ZIP` (using [7z](https://www.7-zip.org/)) and copy to the Webapp folder.
 
 ```
-xcopy /Y /F $(TargetDir)*.dll $(ProjectDir)UpdateDWGParam.bundle\Contents\del /F $(ProjectDir)..\forgesample\wwwroot\bundles\UpdateDWGParam.zip"C:\Program Files\7-Zip\7z.exe" a -tzip $(ProjectDir)../forgesample/wwwroot/bundles/UpdateDWGParam.zip  $(ProjectDir)UpdateDWGParam.bundle\ -xr0!*.pdb
+xcopy /Y /F $(TargetDir)*.dll $(ProjectDir)UpdateDWGParam.bundle\Contents\
+del /F $(ProjectDir)..\designAutomationSample\wwwroot\bundles\UpdateDWGParam.zip
+"C:\Program Files\7-Zip\7z.exe" a -tzip $(ProjectDir)../designAutomationSample/wwwroot/bundles/UpdateDWGParam.zip  $(ProjectDir)UpdateDWGParam.bundle\ -xr0!*.pdb
 ```
 
 ## Debug Locally
@@ -49,4 +51,4 @@ This sample is licensed under the terms of the [MIT License](http://opensource.o
 
 ## Written by
 
-Madhukar Moogala [@galakar](https://twitter.com/galakar), [Forge Partner Development](http://forge.autodesk.com)
+Madhukar Moogala [@galakar](https://twitter.com/galakar), [Autodesk Platform Services](http://aps.autodesk.com)

@@ -27,7 +27,7 @@ https://user-images.githubusercontent.com/6602398/204210930-b4c11bb9-6d95-4e5f-8
 
 ## Prerequisites
 
-1. **Forge Account**: Learn how to create a Forge Account, activate subscription and create an app at [this tutorial](https://tutorials.autodesk.io/#create-an-account). 
+1. **APS Account**: Learn how to create a APS Account, activate subscription and create an app at [this tutorial](https://tutorials.autodesk.io/#create-an-account). 
 2. **Visual Studio**: Either Community (Windows) or Code (Windows, MacOS).
 3. **.NET Core** basic knowledge with C#
 4. **ngrok**: Routing tool, [download here](https://ngrok.com/). 
@@ -73,7 +73,7 @@ Open the `webapp` folder (only), at the bottom-right, select **Yes** and **Resto
 
 ![](../media/webapp/visual_code_restore.png)
 
-At the `.vscode\launch.json`, find the env vars and add your Forge Client ID, Secret and callback URL. Also define the `ASPNETCORE_URLS` variable. The end result should be as shown below:
+At the `.vscode\launch.json`, find the env vars and add your APS Client ID, Secret and callback URL. Also define the `ASPNETCORE_URLS` variable. The end result should be as shown below:
 
 ```json
 "env": {
@@ -93,8 +93,8 @@ Open `http://localhost:8080` to start the app, if first time, click on `Define A
 
 Documentation:
 
-- [Design Automation v3](https://forge.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/)
-- [Data Management](https://forge.autodesk.com/en/docs/data/v2/reference/http/) used to store input and output files.
+- [Design Automation v3](https://aps.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/)
+- [Data Management](https://aps.autodesk.com/en/docs/data/v2/reference/http/) used to store input and output files.
 
 Other APIs:
 

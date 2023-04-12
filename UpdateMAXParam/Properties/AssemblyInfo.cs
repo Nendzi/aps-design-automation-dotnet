@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("3ds Max sample plugin for learnforge.autodesk.io")]
+[assembly: AssemblyTitle("3ds Max sample plugin for tutorials.autodesk.io")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Autodesk Developer Network Samples")]
-[assembly: AssemblyProduct("Autodesk Forge")]
+[assembly: AssemblyProduct("Autodesk Platform Services")]
 [assembly: AssemblyCopyright("Copyright © Autodesk Developer Network Samples 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
