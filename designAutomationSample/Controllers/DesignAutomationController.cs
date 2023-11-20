@@ -372,8 +372,7 @@ namespace designAutomationSample.Controllers
                 System.IO.File.Delete(fileSavePath);
             }
 
-            // prepare & submit workitem
-            string callbackUrl = string.Format("{0}/api/aps/callback/designautomation?id={1}&outputFileName={2}", OAuthController.GetAppSetting("APS_WEBHOOK_URL"), browserConnectionId, outputFileNameOSS);
+            // prepare & submit workitem            
             WorkItem workItemSpec = new WorkItem()
             {
                 ActivityId = activityName,
@@ -381,14 +380,55 @@ namespace designAutomationSample.Controllers
                 {
                     { "inputFile", inputFileArgument },
                     { "inputJson",  inputJsonArgument },
-                    { "outputFile", outputFileArgument },
-                    { "onComplete", new XrefTreeArgument { Verb = Verb.Post, Url = callbackUrl } }
+                    { "outputFile", outputFileArgument }
+                   
                 }
             };
             WorkItemStatus workItemStatus = await _designAutomation.CreateWorkItemAsync(workItemSpec);
-
+            MonitorWorkitem(oauth, browserConnectionId, workItemStatus, outputFileNameOSS);
             return Ok(new { WorkItemId = workItemStatus.Id });
         }
+
+        private async Task MonitorWorkitem(dynamic oauth, string browserConnectionId, WorkItemStatus workItemStatus, string outputFileNameOSS)
+        {
+            try
+            {
+                
+                while (!workItemStatus.Status.IsDone())
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    workItemStatus = await _designAutomation.GetWorkitemStatusAsync(workItemStatus.Id);
+                }
+                using (var httpClient = new HttpClient())
+                {
+                    byte[] bs = await httpClient.GetByteArrayAsync(workItemStatus.ReportUrl);
+                    string report = System.Text.Encoding.Default.GetString(bs);
+                    await _hubContext.Clients.Client(browserConnectionId).SendAsync("onComplete", report);
+                }
+
+                if (workItemStatus.Status == Status.Success)
+                {
+                    ObjectsApi objectsApi = new ObjectsApi();
+                    objectsApi.Configuration.AccessToken = oauth.access_token;
+
+                    ApiResponse<dynamic> res = await objectsApi.getS3DownloadURLAsyncWithHttpInfo(
+                                                NickName.ToLower() + "-designautomation",
+                                                outputFileNameOSS, new Dictionary<string, object> {
+                                                { "minutesExpiration", 15.0 },
+                                                { "useCdn", true }
+                                                });
+                    await _hubContext.Clients.Client(browserConnectionId).SendAsync("downloadResult", (string)(res.Data.url));
+                    Console.WriteLine("Congrats!");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }      
+        }
+
+
 
         /// <summary>
         /// Callback from Design Automation Workitem (onProgress or onComplete)
