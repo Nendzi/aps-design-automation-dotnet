@@ -398,6 +398,7 @@ namespace designAutomationSample.Controllers
                 {
                     await Task.Delay(TimeSpan.FromSeconds(2));
                     workItemStatus = await _designAutomation.GetWorkitemStatusAsync(workItemStatus.Id);
+                    await _hubContext.Clients.Client(browserConnectionId).SendAsync("onComplete", workItemStatus.ToString());
                 }
                 using (var httpClient = new HttpClient())
                 {
@@ -424,6 +425,7 @@ namespace designAutomationSample.Controllers
             }
             catch (Exception ex)
             {
+                await _hubContext.Clients.Client(browserConnectionId).SendAsync("onComplete", ex.Message);
                 Console.WriteLine(ex.Message);
             }      
         }
