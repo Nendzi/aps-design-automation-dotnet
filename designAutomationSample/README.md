@@ -42,6 +42,8 @@ Clone this project or download it. It's recommended to install [GitHub desktop](
 
 **Visual Studio** (Windows):
 
+![](../media/webapp/visual_studio_settings.png)
+
 Right-click on the project, then go to **Debug**. Adjust the settings as shown below. 
 
 ![](../media/webapp/visual_studio_settings.png)
