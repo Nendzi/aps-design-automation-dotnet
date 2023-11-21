@@ -18,10 +18,7 @@ See other projects for bundles.
 
 ## Thumbnail
 
-
 https://user-images.githubusercontent.com/6602398/204210930-b4c11bb9-6d95-4e5f-88d5-4bda00f7a090.mp4
-
-
 
 # Setup
 
@@ -31,26 +28,19 @@ https://user-images.githubusercontent.com/6602398/204210930-b4c11bb9-6d95-4e5f-8
 2. **Visual Studio**: Either Community (Windows) or Code (Windows, MacOS).
 3. **.NET Core** basic knowledge with C#
 
-
 ## Running locally
 
 Clone this project or download it. It's recommended to install [GitHub desktop](https://desktop.github.com/). To clone it via command line, use the following (**Terminal** on MacOSX/Linux, **Git Shell** on Windows):
 
     git clone https://github.com/autodesk-platform-services/aps-design-automation-dotnet.git
 
-
-
 **Visual Studio** (Windows):
-
-![](../media/webapp/visual_studio_settings.png)
 
 Right-click on the project, then go to **Debug**. Adjust the settings as shown below. 
 
 ![](../media/webapp/visual_studio_settings.png)
 
 Right-click on the project, then `Add` ---> `New Item`, select `JSON` file and name it `appsettings.user.json` , this is a user settings files required by Design Automation sdk to make authentication and run various API requests.
-
-
 
 ```json
 {
@@ -60,8 +50,6 @@ Right-click on the project, then `Add` ---> `New Item`, select `JSON` file and n
   }
 }
 ```
-
-
 
 **Visual Sutdio Code** (Windows, MacOS):
 
