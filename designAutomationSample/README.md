@@ -18,10 +18,7 @@ See other projects for bundles.
 
 ## Thumbnail
 
-
 https://user-images.githubusercontent.com/6602398/204210930-b4c11bb9-6d95-4e5f-88d5-4bda00f7a090.mp4
-
-
 
 # Setup
 
@@ -30,21 +27,12 @@ https://user-images.githubusercontent.com/6602398/204210930-b4c11bb9-6d95-4e5f-8
 1. **APS Account**: Learn how to create a APS Account, activate subscription and create an app at [this tutorial](https://tutorials.autodesk.io/#create-an-account). 
 2. **Visual Studio**: Either Community (Windows) or Code (Windows, MacOS).
 3. **.NET Core** basic knowledge with C#
-4. **ngrok**: Routing tool, [download here](https://ngrok.com/). 
 
 ## Running locally
 
 Clone this project or download it. It's recommended to install [GitHub desktop](https://desktop.github.com/). To clone it via command line, use the following (**Terminal** on MacOSX/Linux, **Git Shell** on Windows):
 
     git clone https://github.com/autodesk-platform-services/aps-design-automation-dotnet.git
-
-**ngrok**
-
-When a `Workitem` completes, **Design Automation** can notify our application. As the app is running locally (i.e. `localhost`), it's not reacheable from the internet. `ngrok` tool creates a temporary address that channels notifications to our `localhost` address.
-
-After [download ngrok](https://ngrok.com/), run `ngrok http 8080 --host-header="localhost:8080"`, then copy the `http` address into the `APS_WEBHOOK_URL` environment variable (see next). For this sample, do not use the `https` address.
-
-![](../media/webapp/ngrok_setup.png)
 
 **Visual Studio** (Windows):
 
@@ -54,8 +42,6 @@ Right-click on the project, then go to **Debug**. Adjust the settings as shown b
 
 Right-click on the project, then `Add` ---> `New Item`, select `JSON` file and name it `appsettings.user.json` , this is a user settings files required by Design Automation sdk to make authentication and run various API requests.
 
-
-
 ```json
 {
   "Forge": {
@@ -64,8 +50,6 @@ Right-click on the project, then `Add` ---> `New Item`, select `JSON` file and n
   }
 }
 ```
-
-
 
 **Visual Sutdio Code** (Windows, MacOS):
 
@@ -80,9 +64,8 @@ At the `.vscode\launch.json`, find the env vars and add your APS Client ID, Secr
     "ASPNETCORE_ENVIRONMENT": "Development",
     "ASPNETCORE_URLS" : "http://localhost:8080",
     "APS_CLIENT_ID": "your id here",
-    "APS_CLIENT_SECRET": "your secret here",
-    "APS_WEBHOOK_URL": "http://1234.ngrok.io",
-},
+    "APS_CLIENT_SECRET": "your secret here" 
+}
 ```
 
 **How to use this sample**
